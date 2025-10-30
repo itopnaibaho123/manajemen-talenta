@@ -27,7 +27,6 @@ public class Penilaian360 {
     private String status;
 
     private String alamat;
-    private Integer rataRata;
 
 
     private List<String> tim;

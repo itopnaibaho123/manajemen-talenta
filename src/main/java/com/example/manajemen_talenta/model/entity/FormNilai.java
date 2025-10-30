@@ -18,5 +18,5 @@ public class FormNilai {
 
     private Integer rataRata;
 
-    private Integer banyakPenilai;
+    private Integer banyakDataMasuk;
 }

@@ -22,14 +22,14 @@ public class Pegawai {
     private Long user;
 
     private String nama;
-    private LocalDate tglLahir;
+    private String tanggalLahir;
     private String alamat;
     private String pendidikanTerakhir;
 
     // atasan berbasis id pegawai (String ID eksternal / kode pegawai)
     private String atasanId;
-    private List<String> bawahan;
-    private List<String> listDinilai;
+    private List<Long> bawahan;
+    private List<Long> listDinilai;
 
 
 }

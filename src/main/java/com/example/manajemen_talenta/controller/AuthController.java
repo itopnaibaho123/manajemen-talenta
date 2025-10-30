@@ -33,7 +33,9 @@ public class AuthController {
             );
             UserDetails user = userService.loadUserByUsername(request.get("username"));
             String token = jwtUtil.generateToken(user);
-            return Map.of("token", token, "role", user.getAuthorities().iterator().next().getAuthority());
+            String full = user.getAuthorities().iterator().next().getAuthority(); 
+            String role = full.startsWith("ROLE_") ? full.substring(5) : full;
+            return Map.of("token", token, "role", role);
         } catch (AuthenticationException e) {
             return Map.of("error", "Username atau password salah");
         }
