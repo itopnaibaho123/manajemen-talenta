@@ -2,6 +2,7 @@ package com.example.manajemen_talenta.controller;
 
 import com.example.manajemen_talenta.model.entity.User;
 import com.example.manajemen_talenta.model.enums.Role;
+import com.example.manajemen_talenta.service.PegawaiService;
 import com.example.manajemen_talenta.service.Penilaian360Service;
 import com.example.manajemen_talenta.service.UserService;
 
@@ -19,6 +20,7 @@ public class PegawaiController {
 
     private final UserService userService;
     private final Penilaian360Service penilaian360Service;
+    private final PegawaiService pegawaiService;
 
     @PostMapping("/penilaian360/{idPegawai}")
     public void menilai(@RequestBody Map<String, String> request,
@@ -44,6 +46,6 @@ public class PegawaiController {
             throw new RuntimeException("User is not a pegawai");
         }
 
-        penilaian360Service.riwayat(user, request);
+        pegawaiService.riwayat(user, request);
     }
 }

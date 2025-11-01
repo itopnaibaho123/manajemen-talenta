@@ -18,18 +18,14 @@ public class Pegawai {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long user;
-
     private String nama;
-    private String tanggalLahir;
-    private String alamat;
-    private String pendidikanTerakhir;
 
     // atasan berbasis id pegawai (String ID eksternal / kode pegawai)
     private String atasanId;
-    private List<Long> bawahan;
+    private List<String> bawahan;
     private List<Long> listDinilai;
+    private List<String> peer;
 
 
 }

@@ -22,7 +22,6 @@ public class Penilaian360Service {
     private final PegawaiRepository pegawaiRepository;
     private final FormNilaiRepository formNilaiRepository;
     private final Penilaian360Repository penilaian360Repository;
-    private final KompetensiRepository kompetensiRepository;
 
     public void menilai360(User user, String pegawaiId, Map<String, String> request) {
 
@@ -52,21 +51,7 @@ public class Penilaian360Service {
         }
     }
 
-    public void riwayat(User user, Map<String, String> request) {
 
-        String tanggalLahir = request.get("tanggalLahir");
-        String alamat  = request.get("alamat");
-        String pendidikanTerakhir =  request.get("pendidikanTerakhir");
-
-        Optional<Pegawai> pegawaiObject = pegawaiRepository.findByUser(user.getId());
-        if (pegawaiObject.isPresent()) {
-            Pegawai pegawai = pegawaiObject.get();
-            pegawai.setAlamat(alamat);
-            pegawai.setPendidikanTerakhir(pendidikanTerakhir);
-            pegawai.setTanggalLahir(tanggalLahir);
-            pegawaiRepository.save(pegawai);
-        }
-    }
 
     public FormNilai melihat360(User user, String penilaian360) {
         FormNilai formNilai = new FormNilai();
@@ -98,29 +83,7 @@ public class Penilaian360Service {
         return penilaian360Repository.findAll().getLast();
     }
 
-    public List<Kompetensi> getAllKompetensi(User user){
-        List<Kompetensi> listKompetensiUser = new ArrayList<>();
-        Pegawai pegawai = null;
-        FormNilai formNilai = null;
-        Optional<Pegawai> pegawaiObject = pegawaiRepository.findByUser(user.getId());
 
-        if (pegawaiObject.isPresent()) {
-            pegawai = pegawaiObject.get();
-        }
-        Penilaian360 penilaian360 = getCurrent360();
-        Optional<FormNilai> formNilaiObject =  formNilaiRepository.findByPegawaiIdAndPenilaian360(pegawai.getId(), penilaian360.getId());
-        if (formNilaiObject.isPresent()) {
-            formNilai = formNilaiObject.get();
-        }
-
-        for (Kompetensi kompetensi : kompetensiRepository.findAll()) {
-            if (kompetensi.getBobot() > formNilai.getRataRata()) {
-                listKompetensiUser.add(kompetensi);
-            }
-        }
-
-        return listKompetensiUser;
-    }
 
     public Penilaian360 createPenilaian360(User user, Penilaian360 request) {
         Penilaian360 penilaian360 = new Penilaian360();
@@ -134,6 +97,16 @@ public class Penilaian360Service {
         return penilaian360Repository.save(penilaian360);
     }
 
+    public Penilaian360 getSelesaiPenilaian360(User user, Long penilaian360Id) {
+        Penilaian360 penilaian360 = new Penilaian360();
+        Optional<Penilaian360> penilaian360Object = penilaian360Repository.findById(penilaian360Id);
+        if (penilaian360Object.isPresent()) {
+             penilaian360 = penilaian360Object.get();
+        }
+        penilaian360.setStatus("Selesai");
+        return penilaian360Repository.save(penilaian360);
+    }
+
     public List<FormPenilaianSummary> getListFormPenilaian360(User user, Long penilaian360Id) {
         List<FormPenilaianSummary> result = new ArrayList<>();
         List<FormNilai> forms = formNilaiRepository.findAllByPenilaian360(penilaian360Id);
@@ -143,5 +116,9 @@ public class Penilaian360Service {
             );
         }
         return result;
+    }
+
+    public List<Penilaian360> getAllPenilaian360() {
+        return penilaian360Repository.findAll();
     }
 }
