@@ -6,10 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class FormPenilaianSummary {
+public class PrediksiResignSummary {
     private String nama;
-    private int rataRata;
+    private Long nomorPegawai;
+    private int bobot;
+    private String durasiWaktuResign;
 }

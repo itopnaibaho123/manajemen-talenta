@@ -37,13 +37,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public String encodePassword(String password) {
-        return encoder.encode(password);
-    }
-
-    public void save(User user) {
-        userRepository.save(user);
-    }
     public User createUser(String username, String password, String role) {
         if (userRepository.findByUsername(username).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
