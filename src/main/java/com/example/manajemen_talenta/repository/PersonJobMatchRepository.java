@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PersonJobMatchRepository extends MongoRepository<PersonJobMatch, Long> {
+public interface PersonJobMatchRepository extends MongoRepository<PersonJobMatch, String> {
     Optional<PersonJobMatch> findByPegawai(String pegawai);
 }
 

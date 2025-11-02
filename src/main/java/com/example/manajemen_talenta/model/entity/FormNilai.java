@@ -1,6 +1,7 @@
 package com.example.manajemen_talenta.model.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -11,10 +12,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class FormNilai {
 
+    @Id
+    private String id;
 
-    private Long pegawaiId;
+    private String pegawaiId;
 
-    private Long penilaian360;
+    private String penilaian360;
 
     private Integer rataRata;
 

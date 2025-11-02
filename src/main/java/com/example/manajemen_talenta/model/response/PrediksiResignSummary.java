@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PrediksiResignSummary {
+
     private String nama;
-    private Long nomorPegawai;
+    private String nomorPegawai;
     private int bobot;
     private String durasiWaktuResign;
 }

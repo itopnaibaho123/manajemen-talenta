@@ -1,10 +1,8 @@
 package com.example.manajemen_talenta.model.entity;
 import lombok.AllArgsConstructor;
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
 import java.util.List;
 
 
@@ -16,15 +14,13 @@ import java.util.List;
 public class Pegawai {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long user;
+    private String id;
+    private String user;
     private String nama;
-
-    // atasan berbasis id pegawai (String ID eksternal / kode pegawai)
     private String atasanId;
     private List<String> bawahan;
-    private List<Long> listDinilai;
+    private List<String> listDinilai;
+    private List<Kompetensi> kompetensi;
     private List<String> peer;
 
 

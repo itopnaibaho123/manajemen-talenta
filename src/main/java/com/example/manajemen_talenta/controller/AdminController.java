@@ -28,21 +28,23 @@ public class AdminController {
         String username = request.get("username");
         String password = request.get("password");
         String role = request.get("role");
+        User user = userService.createUser(username, password, role);
         if (role.equals(Role.PEGAWAI)) {
             pegawaiRepository.save(
                     Pegawai.builder()
+                            .user(user.getId())
                             .nama(username)
                             .build()
             );
         }
 
         // contoh: ROLE_ADMIN_HR, ROLE_PEGAWAI
-        return userService.createUser(username, password, role);
+        return user;
     }
 
     @PostMapping("/assign")
     public Pegawai assign(@RequestBody AssignRequest request, String idPegawai) {
-        Pegawai pegawai = pegawaiRepository.findById(Long.parseLong(idPegawai)).get();
+        Pegawai pegawai = pegawaiRepository.findById(idPegawai).get();
         pegawai.setPeer(request.getPeer());
         pegawai.setBawahan(request.getBawahan());
         pegawai.setAtasanId(request.getAtasan());

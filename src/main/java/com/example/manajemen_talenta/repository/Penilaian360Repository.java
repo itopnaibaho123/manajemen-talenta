@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface Penilaian360Repository extends MongoRepository<Penilaian360, Long> {
+public interface Penilaian360Repository extends MongoRepository<Penilaian360, String> {
 
 }

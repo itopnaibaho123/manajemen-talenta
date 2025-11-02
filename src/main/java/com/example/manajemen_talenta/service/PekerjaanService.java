@@ -18,29 +18,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PekerjaanService {
 
     private final PekerjaanRepository pekerjaanRepository;
-    private final PegawaiRepository pegawaiRepository;
-    private final JobPersonMatchRepository jobPersonMatchRepository;
-
 
     public Pekerjaan createPekerjaan(Pekerjaan pekerjaan) {
-        Pekerjaan pekerjaan1 =  pekerjaanRepository.save(pekerjaan);
-        return pekerjaan1;
+        return pekerjaanRepository.save(pekerjaan);
     }
 
-    public JobPersonMatch createJobPersonMatch(Long idPegawai) {
-        Pegawai pegawai = new Pegawai();
-        Optional<Pegawai> pegawaiOptional = pegawaiRepository.findById(idPegawai);
-        if (pegawaiOptional.isPresent()) {
-            pegawai = pegawaiOptional.get();
-        }
-
-        List<Pekerjaan> pekerjaanList = pekerjaanRepository.findAll();
-
-        if(pekerjaanList.size() > 3) {
-
-        }
-
-        Pekerjaan pekerjaan1 =  pekerjaanRepository.save(pekerjaan);
-        return pekerjaan1;
+    public List<Pekerjaan> getALlPekerjaan() {
+        return pekerjaanRepository.findAll();
     }
 }

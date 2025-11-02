@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface FormNilaiRepository extends MongoRepository<FormNilai, String> {
-    Optional<FormNilai> findByPegawaiIdAndPenilaian360(Long pegawaiId, Long penilaian360);
-    List<FormNilai> findAllByPenilaian360(Long penilaian360);
+    Optional<FormNilai> findByPegawaiIdAndPenilaian360(String pegawaiId, String penilaian360);
+    List<FormNilai> findAllByPenilaian360(String penilaian360);
 }

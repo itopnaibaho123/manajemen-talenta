@@ -1,7 +1,6 @@
 package com.example.manajemen_talenta.model.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +18,7 @@ import java.util.List;
 public class JobPersonMatch {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String pekerjaan;
     private List<Pegawai> pegawai;
 

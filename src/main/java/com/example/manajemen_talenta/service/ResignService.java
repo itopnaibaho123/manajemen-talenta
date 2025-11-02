@@ -8,6 +8,7 @@ import com.example.manajemen_talenta.repository.FormNilaiRepository;
 import com.example.manajemen_talenta.repository.PegawaiRepository;
 import com.example.manajemen_talenta.repository.Penilaian360Repository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,10 +42,29 @@ public class ResignService {
         return prediksiResignSummary;
     }
 
+    public PrediksiResignSummary prediksiResignSummary(String idPegawai) {
+        FormNilai formNilai = new FormNilai();
+        Pegawai pegawai = new Pegawai();
+
+        Optional<FormNilai> optionalFormNilai = formNilaiRepository.findByPegawaiIdAndPenilaian360(idPegawai, getCurrent360().getId());
+        if (optionalFormNilai.isPresent()) {
+            formNilai = optionalFormNilai.get();
+        } else {
+            return null;
+        }
+
+        Optional<Pegawai> pegawaiObject = pegawaiRepository.findById(formNilai.getPegawaiId());
+        if (pegawaiObject.isPresent()) {
+            pegawai = pegawaiObject.get();
+        }
+        return new PrediksiResignSummary(pegawai.getNama(), pegawai.getId(), formNilai.getRataRata(), getDurasi(formNilai.getRataRata()));
+
+    }
+
     private String getDurasi(Integer rataRata) {
 
         if (rataRata >= 0 && rataRata < 5) {
-            return "Akan Keluar dalam waktu 1 Bulan";
+            return "Akan Reisgn dalam waktu 1 Bulan";
         } else if (rataRata >= 5 && rataRata < 15) {
             return  "Akan Resign dalam waktu 3 Bulan";
         } else if (rataRata >= 15 && rataRata < 25) {

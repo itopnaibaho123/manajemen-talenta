@@ -1,7 +1,7 @@
 package com.example.manajemen_talenta.model.entity;
 
 
-import jakarta.persistence.*;
+
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
@@ -18,8 +18,7 @@ import java.util.List;
 public class Penilaian360 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String namaPeriode;
     private String tanggalMulai;   // bisa diubah ke LocalDate jika mau

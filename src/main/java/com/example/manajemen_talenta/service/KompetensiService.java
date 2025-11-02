@@ -6,6 +6,7 @@ import com.example.manajemen_talenta.repository.KompetensiRepository;
 import com.example.manajemen_talenta.repository.PegawaiRepository;
 import com.example.manajemen_talenta.repository.Penilaian360Repository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,40 +17,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class KompetensiService {
     private final KompetensiRepository kompetensiRepository;
-    private final FormNilaiRepository formNilaiRepository;
     private final PegawaiRepository pegawaiRepository;
-    private final Penilaian360Repository penilaian360Repository;
 
 
-    private Penilaian360 getCurrent360() {
-        return penilaian360Repository.findAll().getLast();
-    }
+    public List<Kompetensi> getAllKompetensiPegawai(String id){
 
 
-    public List<Kompetensi> getAllKompetensiPegawai(User user, Long id){
-        List<Kompetensi> listKompetensiUser = new ArrayList<>();
-        Pegawai pegawai = null;
-        FormNilai formNilai = null;
-        Optional<Pegawai> pegawaiObject = pegawaiRepository.findByUser(id == null ? user.getId() : id);
+        Pegawai pegawai = new Pegawai();
+        Optional<Pegawai> pegawaiObject = pegawaiRepository.findByUser(id);
 
         if (pegawaiObject.isPresent()) {
             pegawai = pegawaiObject.get();
         }
-        Penilaian360 penilaian360 = getCurrent360();
-        Optional<FormNilai> formNilaiObject =  formNilaiRepository.findByPegawaiIdAndPenilaian360(pegawai.getId(), penilaian360.getId());
-        if (formNilaiObject.isPresent()) {
-            formNilai = formNilaiObject.get();
+        return pegawai.getKompetensi();
+    }
+
+    public Pegawai updateKompetensiPegawai(List<Kompetensi> kompetensi, String idPegawai){
+
+        Pegawai pegawai = new Pegawai();
+        Optional<Pegawai> pegawaiObject = pegawaiRepository.findById(idPegawai);
+        if (pegawaiObject.isPresent()) {
+            pegawai = pegawaiObject.get();
+            pegawai.setKompetensi(kompetensi);
         }
 
-        for (Kompetensi kompetensi : kompetensiRepository.findAll()) {
-            if (kompetensi.getBobot() > formNilai.getRataRata()) {
-                listKompetensiUser.add(kompetensi);
-            }
-        }
-        return listKompetensiUser;
+        return pegawaiRepository.save(pegawai);
     }
 
     public Kompetensi createKompetensi(Kompetensi kompetensi) {
         return kompetensiRepository.save(kompetensi);
+    }
+
+    public List<Pegawai> getAllPegawai(){
+        return pegawaiRepository.findAll();
     }
 }
