@@ -3,7 +3,7 @@ spring:
     name: ms-manajemen-talenta
   data:
     mongodb:
-      uri: mongodb://root.mongoroot@10.22.103.22:27017/manajemen-talenta?authsource=admin
+      uri: mongodb+srv://root:12345@manajemen-talenta.e35gcuo.mongodb.net/manajemen-talenta?authsource=admin
 
 
 server:
